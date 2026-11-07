@@ -61,3 +61,16 @@ behave
 | POST | /products | Create a product |
 | PUT | /products/{id} | Update a product |
 | DELETE | /products/{id} | Delete a product |
+
+
+## Continuous Integration (GitHub Actions)
+
+The GitHub Actions workflow at [`.github/workflows/workflow.yml`](.github/workflows/workflow.yml) runs on pushes, pull requests, and manual dispatch. It checks out the source, configures Python 3.11, installs project dependencies, runs a focused **flake8** lint check, and executes the unit tests with **pytest**.
+
+## Tekton Tasks
+
+The Tekton task definitions are in [`.tekton/tasks.yml`](.tekton/tasks.yml). The `cleanup` task clears the shared source workspace before a fresh run. The `nose` task name is retained to match the course submission requirement; because this repository's actual tests use pytest, that task installs and runs pytest against `tests/`.
+
+## CI/CD Submission Evidence
+
+See [`docs/CI-CD-SUBMISSION.md`](docs/CI-CD-SUBMISSION.md) for the submission checklist, evidence filenames, commands, and the distinction between GitHub Actions evidence and OpenShift console evidence.
