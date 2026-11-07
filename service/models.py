@@ -123,8 +123,8 @@ class Product(db.Model):
         logger.info("Initializing database")
         cls.app = app
         db.init_app(app)
-        # Do not create persistent tables while importing the app in CI.
-        # Tests explicitly initialize the database in their setUpClass methods.
+        # Tests configure the database URI before init_db(); initialize tables
+        # inside the application context so imports work in CI and local runs.
         with app.app_context():
             db.create_all()
 
