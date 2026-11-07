@@ -36,4 +36,5 @@ spec:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest
+        export DATABASE_URI="sqlite:///ci-test.db"
         python -m pytest tests/ -v
