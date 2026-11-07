@@ -11,7 +11,7 @@ Repository: https://github.com/ThePranish03/product-catalogue-final-project
 ## GitHub Actions verification
 
 After pushing the workflow, open https://github.com/ThePranish03/product-catalogue-final-project/actions
-Select **Product Catalogue CI**, open the newest run, and verify these steps are green:
+Select **Product Catalogue CI**, open the newest run, and verify these steps are green. The first observed attempts reported a test import error because the service expects a root `config.py`; a default `config.py` has since been added and the workflow now sets a temporary SQLite database URI. Verify the newest run before claiming success:
 - Checkout repository
 - Set up Python
 - Install dependencies
