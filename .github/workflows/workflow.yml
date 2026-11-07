@@ -37,4 +37,5 @@ jobs:
         env:
           FLASK_APP: service
           FLASK_ENV: testing
+          DATABASE_URI: sqlite:///ci-test.db
         run: python -m pytest tests/ -v
