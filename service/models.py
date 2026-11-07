@@ -123,8 +123,10 @@ class Product(db.Model):
         logger.info("Initializing database")
         cls.app = app
         db.init_app(app)
-        app.app_context().push()
-        db.create_all()
+        # Do not create persistent tables while importing the app in CI.
+        # Tests explicitly initialize the database in their setUpClass methods.
+        with app.app_context():
+            db.create_all()
 
     @classmethod
     def all(cls):
