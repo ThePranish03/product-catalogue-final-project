@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: cleanup
+  labels:
+    app.kubernetes.io/part-of: product-catalogue
+spec:
+  description: Remove the shared workspace contents before a fresh pipeline run.
+  workspaces:
+    - name: source
+  steps:
+    - name: remove-old-files
+      image: alpine:3.20
+      script: |
+        #!/bin/sh
+        set -eu
+        find "$(workspaces.source.path)" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: nose
+  labels:
+    app.kubernetes.io/part-of: product-catalogue
+spec:
+  description: Run the repository unit tests. This Flask project uses pytest, not nose.
+  workspaces:
+    - name: source
+  steps:
+    - name: run-unit-tests
+      image: python:3.11-slim
+      workingDir: $(workspaces.source.path)
+      script: |
+        #!/bin/sh
+        set -eu
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest
+        python -m pytest tests/ -v
